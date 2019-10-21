@@ -1,4 +1,11 @@
-def read_cities(file_name):
+def read_cities(city-data):
+    infile = open('city-data.txt', 'r')
+    line = infile.readlines()
+    line1 = []
+    for i in range(0, 50):
+        list1 = tuple(line[i].split())
+        line1.append(list1)
+    return(line1)
     """
     Read in the cities from the given `file_name`, and return 
     them as a list of four-tuples: 
@@ -12,6 +19,13 @@ def read_cities(file_name):
     pass
   
 def print_cities(road_map):
+        LocationList = []
+    for j in range(0, 50):
+        CityListLocation = line1[j][1:4]
+        LocationList.append(CityListLocation)
+    print(LocationList)
+    print(float(LocationList[0][2]))
+
     """
     Prints a list of cities, along with their locations. 
     Print only one or two digits after the decimal point.
