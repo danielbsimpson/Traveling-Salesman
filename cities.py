@@ -1,11 +1,13 @@
-def read_cities(city-data):
-    infile = open('city-data.txt', 'r')
+def read_cities(city_data):
+    infile = open(city_data, 'r')
     line = infile.readlines()
     line1 = []
     for i in range(0, 50):
-        list1 = tuple(line[i].split())
+        list1 = tuple(line[i].rstrip().split('\t'))
         line1.append(list1)
-    return(line1)
+    road_map = line1
+    return(road_map)
+road_map = read_cities('city-data.txt')
     """
     Read in the cities from the given `file_name`, and return 
     them as a list of four-tuples: 
@@ -19,12 +21,14 @@ def read_cities(city-data):
     pass
   
 def print_cities(road_map):
-        LocationList = []
-    for j in range(0, 50):
-        CityListLocation = line1[j][1:4]
-        LocationList.append(CityListLocation)
-    print(LocationList)
-    print(float(LocationList[0][2]))
+    LocationList=[]
+    for j in range(0,50):
+        CityName = road_map[j][1]
+        FloatLat = round(float(road_map[j][2]),2)
+        FloatLong = round(float(road_map[j][3]),2)
+        NewList = [CityName, FloatLat, FloatLong]
+        LocationList.append(NewList)
+    return(LocationList)
 
     """
     Prints a list of cities, along with their locations. 
@@ -33,7 +37,23 @@ def print_cities(road_map):
     pass
 
 def compute_total_distance(road_map):
-    """
+    import math
+    DistanceList = []
+    for j in range(0,49):
+        LocLat1 = float(road_map[j][2])
+        LocLat2 = float(road_map[j+1][2])
+        LocLong1 = float(road_map[j][3])
+        LocLong2 = float(road_map[j+1][3])
+
+        Distance = math.sqrt(((LocLat2 - LocLat1)**2) + ((LocLong1 - LocLong2)**2))
+        DistanceList.append(Distance)
+    LastLat = float(road_map[49][2])
+    FirstLat = float(road_map[0][2])
+    LastLong = float(road_map[49][3])
+    FirstLong = float(road_map[0][3])
+    LastDistance = math.sqrt(((LastLat - FirstLat)**2) + ((LastLong - FirstLat)**2))
+    DistanceList.append(LastDistance)
+    return(sum(DistanceList))"""
     Returns, as a floating point number, the sum of the distances of all 
     the connections in the `road_map`. Remember that it's a cycle, so that 
     (for example) in the initial `road_map`, Wyoming connects to Alabama...
@@ -42,6 +62,14 @@ def compute_total_distance(road_map):
 
 
 def swap_cities(road_map, index1, index2):
+    import copy
+    NewLocationList = copy.deepcopy(road_map)
+    NewLocationList[index1] = road_map[index2]
+    NewLocationList[index2] = road_map[index1]
+    NewDistance = compute_total_distance(NewLocationList)
+    
+    ReturnedList = (NewLocationList, NewDistance)
+    return(tuple(ReturnedList))
     """
     Take the city at location `index` in the `road_map`, and the 
     city at location `index2`, swap their positions in the `road_map`, 
@@ -55,6 +83,12 @@ def swap_cities(road_map, index1, index2):
     pass
 
 def shift_cities(road_map):
+    import copy
+    shifted_road_map = copy.deepcopy(road_map)
+    for i in range(0,49):
+        shifted_road_map[i+1] = road_map[i]
+    shifted_road_map[0] = road_map[49]
+    return(shifted_road_map)    
     """
     For every index i in the `road_map`, the city at the position i moves
     to the position i+1. The city at the last position moves to the position
@@ -63,7 +97,20 @@ def shift_cities(road_map):
     pass
 
 def find_best_cycle(road_map):
-    """
+    initial_distance = compute_total_distance(road_map)
+    import random
+    for i in range(0,10000):
+        random_index1 = random.randint(0,49)
+        random_index2 = random.randint(0,49)
+        shifted_city = shift_cities(road_map)
+        swap_city = swap_cities(road_map, random_index1, random_index2)
+        distance_shift = compute_total_distance(shifted_city)
+        distance_swap = compute_total_distance(swap_city[0])
+        if distance_shift < initial_distance:
+            initial_distance = distance_shift
+        if distance_swap < initial_distance:
+            initial_distance = distance_swap
+    return(initial_distance)    """
     Using a combination of `swap_cities` and `shift_cities`, 
     try `10000` swaps/shifts, and each time keep the best cycle found so far. 
     After `10000` swaps/shifts, return the best cycle found so far.
