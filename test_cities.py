@@ -28,24 +28,28 @@ def test_swap_cities():
                  ("Arizona", "Phoenix",	33.448457, -112.073844)] 
     
     assert swap_cities(state_city1, 0, 1) == \
-        [("Delaware", "Dover", 39.161921, -75.526755),\
+         ([("Delaware", "Dover", 39.161921, -75.526755),\
          ("Kentucky", "Frankfort", 38.197274, -84.86311),\
-         ("Minnesota", "Saint Paul", 44.95, -93.094)]
+         ("Minnesota", "Saint Paul", 44.95, -93.094)],\
+        38.528719926809416)
     
     assert swap_cities(state_city1, 1, 2) == \
-        [("Kentucky", "Frankfort", 38.197274, -84.86311),\
+         ([("Kentucky", "Frankfort", 38.197274, -84.86311),\
          ("Minnesota", "Saint Paul", 44.95, -93.094),\
-         ("Delaware", "Dover", 39.161921, -75.526755)]
+         ("Delaware", "Dover", 39.161921, -75.526755)],\
+         38.528719926809416)
     
     assert swap_cities(state_city2, 0, 1) == \
-        [("Alaska",	"Juneau", 58.301935, -134.41974),\
+        ([("Alaska",	"Juneau", 58.301935, -134.41974),\
         ("Alabama", "Montgomery", 32.361538, -86.279118),\
-         ("Arizona", "Phoenix",	33.448457, -112.073844)]
+         ("Arizona", "Phoenix",	33.448457, -112.073844)],\
+         113.92444731706527)
    
     assert swap_cities(state_city2, 0, 2) == \
-        [("Arizona", "Phoenix",	33.448457, -112.073844),\
-        ("Alabama", "Montgomery", 32.361538, -86.279118),\
-         ("Alaska",	"Juneau", 58.301935, -134.41974)]    
+        ([('Arizona', 'Phoenix', 33.448457, -112.073844),\
+          ('Alaska', 'Juneau', 58.301935, -134.41974),\
+          ('Alabama', 'Montgomery', 32.361538, -86.279118)],
+            113.92444731706529)    
         
     '''add your tests'''
 
@@ -60,14 +64,16 @@ def test_shift_cities():
                  ("Arizona", "Phoenix",	33.448457, -112.073844)]
     
     assert shift_cities(state_city1) == \
-        [("Minnesota", "Saint Paul", 44.95, -93.094),\
+        ([("Minnesota", "Saint Paul", 44.95, -93.094),\
          ("Kentucky", "Frankfort", 38.197274, -84.86311),\
-         ("Delaware", "Dover", 39.161921, -75.526755)]
+         ("Delaware", "Dover", 39.161921, -75.526755)],\
+          38.528719926809416)
         
     assert shift_cities(state_city2) == \
-        [("Arizona", "Phoenix",	33.448457, -112.073844),\
+        ([("Arizona", "Phoenix",	33.448457, -112.073844),\
          ("Alabama", "Montgomery", 32.361538, -86.279118),\
-         ("Alaska",	"Juneau", 58.301935, -134.41974)]
+         ("Alaska",	"Juneau", 58.301935, -134.41974)],\
+        113.92444731706527)
 
          
     '''add your tests'''
