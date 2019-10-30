@@ -8,6 +8,7 @@ def read_cities(city_data):
         line1.append(list1)
     road_map = line1
     return(road_map)
+
     """
     Read in the cities from the given `file_name`, and return 
     them as a list of four-tuples: 
@@ -136,6 +137,7 @@ def print_map(road_map):
     pass
 
 def main():
+
     """
     Reads in, and prints out, the city data, then creates the "best"
     cycle and prints it out.
