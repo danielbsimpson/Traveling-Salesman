@@ -1,3 +1,7 @@
+import random
+import math
+import copy
+
 def read_cities(city_data):
     infile = open(city_data, 'r')
     line = infile.readlines()
@@ -37,7 +41,6 @@ def print_cities(road_map):
     """
 
 def compute_total_distance(road_map):
-    import math
     DistanceList = []
     length_file = len(road_map)
     for j in range(0,(length_file - 1)):
@@ -64,7 +67,7 @@ def compute_total_distance(road_map):
 
 
 def swap_cities(road_map, index1, index2):
-    import copy
+
     NewLocationList = copy.deepcopy(road_map)
     NewLocationList[index1] = road_map[index2]
     NewLocationList[index2] = road_map[index1]
@@ -85,15 +88,8 @@ def swap_cities(road_map, index1, index2):
     """
 
 def shift_cities(road_map):
-    import copy
-    length_file = len(road_map)
-    shifted_road_map = copy.deepcopy(road_map)
-    for i in range(0,(length_file - 1)):
-        shifted_road_map[i+1] = road_map[i]
-    shifted_road_map[0] = road_map[(length_file - 1)]
-    NewDistance = compute_total_distance(shifted_road_map)
-    ReturnedList = (shifted_road_map, NewDistance)
-    return(tuple(ReturnedList))    
+    shifted_road_map = [road_map[-1]] + road_map[:-1]
+    return(shifted_road_map)
    
     """
     For every index i in the `road_map`, the city at the position i moves
@@ -106,17 +102,21 @@ def find_best_cycle(road_map):
     initial_distance = compute_total_distance(road_map)
     initial_map = road_map
     length_file = len(road_map)
-    import random
-    for i in range(0,10000):
-        random_index1 = random.randint(0,(length_file - 1))
-        random_index2 = random.randint(0,(length_file - 1))
-        shifted_city = shift_cities(road_map)
-        swap_city = swap_cities(shifted_city[0], random_index1, random_index2)
-        distance_swap = compute_total_distance(swap_city[0])
-        swap_map = swap_city[0]
-        if distance_swap < initial_distance:
-            initial_distance = distance_swap
-            initial_map = swap_map
+    count = 0
+    
+    while count <= 10000:
+        count += 1
+        random_index1 = length_file * random.random()
+        random_index2 = length_file * random.random()
+        best_cycle = swap_cities((shift_cities(road_map)), random_index1, random_index2)
+        best_map = best_cycle[0]
+        distance_best_cycle = best_cycle[1]
+        
+        if distance_best_cycle < initial_distance:
+            initial_distance = distance_best_cycle
+            initial_map = best_map
+            
+        print(random_index1, random_index2, initial_distance, initial_map[random_index1], initial_map[random_index2])
     return(initial_map, initial_distance)    
     
     """
