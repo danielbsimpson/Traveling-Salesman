@@ -106,9 +106,9 @@ def find_best_cycle(road_map):
     
     while count <= 10000:
         count += 1
-        random_index1 = length_file * random.random()
-        random_index2 = length_file * random.random()
-        best_cycle = swap_cities((shift_cities(road_map)), random_index1, random_index2)
+        random_index1 = int(length_file * random.random()) 
+        random_index2 = int(length_file * random.random())
+        best_cycle = swap_cities((shift_cities(initial_map)), random_index1, random_index2)
         best_map = best_cycle[0]
         distance_best_cycle = best_cycle[1]
         
@@ -116,7 +116,6 @@ def find_best_cycle(road_map):
             initial_distance = distance_best_cycle
             initial_map = best_map
             
-        print(random_index1, random_index2, initial_distance, initial_map[random_index1], initial_map[random_index2])
     return(initial_map, initial_distance)    
     
     """
