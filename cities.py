@@ -43,20 +43,13 @@ def print_cities(road_map):
 def compute_total_distance(road_map):
     DistanceList = []
     length_file = len(road_map)
-    for j in range(0,(length_file - 1)):
+    for j in range(0, length_file):
         LocLat1 = float(road_map[j][2])
-        LocLat2 = float(road_map[j+1][2])
+        LocLat2 = float(road_map[(j + 1) % len(road_map)][2])
         LocLong1 = float(road_map[j][3])
-        LocLong2 = float(road_map[j+1][3])
-
+        LocLong2 = float(road_map[(j + 1) % len(road_map)][3])
         Distance = math.sqrt(((LocLat2 - LocLat1)**2) + ((LocLong2 - LocLong1)**2))
         DistanceList.append(Distance)
-    LastLat = float(road_map[(length_file - 1)][2])
-    FirstLat = float(road_map[0][2])
-    LastLong = float(road_map[(length_file - 1)][3])
-    FirstLong = float(road_map[0][3])
-    LastDistance = math.sqrt(((LastLat - FirstLat)**2) + ((LastLong - FirstLong)**2))
-    DistanceList.append(LastDistance)
     return(sum(DistanceList))
     
     """
