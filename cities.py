@@ -92,8 +92,8 @@ def shift_cities(road_map):
 
 
 def find_best_cycle(road_map):
-    initial_distance = compute_total_distance(road_map)
-    initial_map = road_map
+    end_distance = compute_total_distance(road_map)
+    end_map = road_map
     length_file = len(road_map)
     count = 0
     
@@ -101,15 +101,15 @@ def find_best_cycle(road_map):
         count += 1
         random_index1 = int(length_file * random.random()) 
         random_index2 = int(length_file * random.random())
-        best_cycle = swap_cities((shift_cities(initial_map)), random_index1, random_index2)
+        best_cycle = swap_cities((shift_cities(end_map)), random_index1, random_index2)
         best_map = best_cycle[0]
         distance_best_cycle = best_cycle[1]
         
-        if distance_best_cycle < initial_distance:
-            initial_distance = distance_best_cycle
-            initial_map = best_map
+        if distance_best_cycle < end_distance:
+            end_distance = distance_best_cycle
+            end_map = best_map
             
-    return(initial_map, initial_distance)    
+    return(end_map, end_distance)    
     
     """
     Using a combination of `swap_cities` and `shift_cities`, 
@@ -121,6 +121,25 @@ def find_best_cycle(road_map):
 
 def print_map(road_map):
 
+    long_list = []
+    lat_list = []
+    for j in range(0, len(road_map[0])):
+        long_list.append(float(road_map[0][j][2]))
+        lat_list.append(float(road_map[0][j][3]))
+    
+    long_list.sort()
+    lat_list.sort()
+    
+#    long_min = math.floor(long_list[0])
+#    long_max = math.ceil(long_list[49])
+#    lat_min = math.floor(lat_list[0])
+#    lat_max = math.ceil(lat_list[49])
+#    canvas = tkinter.Canvas(window, bg = 'white', width = 3700, height = 1900)
+#    canvas.pack()
+#    box1 = canvas.create_rectangle(50,50,1600,800)
+    
+    
+    return (long_list, lat_list)
     
     """
     Prints, in an easily understandable format, the cities and 
