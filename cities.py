@@ -121,6 +121,25 @@ def find_best_cycle(road_map):
 
 
 def print_map(best_cycle):
+    best_route_list = []
+    for i in range(0, len(best_cycle[0]) - 1):
+        distance_between = str(round(compute_total_distance([best_cycle[0][i], best_cycle[0][i+1]]),2))
+        route = str(best_cycle[0][i][1]) +' to ' + str(best_cycle[0][i+1][1]) + ', travel distance of: ' + distance_between + '\n'
+        best_route_list.append(route)
+    str1 = ''.join(best_route_list) + '\n' + 'Total Travel Distance = ' + str(best_cycle[1])
+    return(str1)
+        
+
+    
+    """
+    Prints, in an easily understandable format, the cities and 
+    their connections, along with the cost for each connection 
+    and the total cost.
+    """
+    pass
+
+def visualize_road_map(best_cycle):
+    
     long_list = []
     lat_list = []
     for j in range(0, len(best_cycle)):
@@ -135,6 +154,7 @@ def print_map(best_cycle):
     lat_min = math.floor(lat_list[0])
     lat_max = math.ceil(lat_list[49])
     
+    #set min and max long/lat to max values in list or -180/180 and -90/90
     x1_coordinate = max(long_min, -180)
     x2_coordinate = min(long_max, 180)    
     y1_coordinate = min(lat_min, 90)
@@ -154,7 +174,6 @@ def print_map(best_cycle):
     grid_size_h_start = 30
     grid_size_w = screen_width - 400
     grid_size_h = screen_height - 200
-#    box1 = canvas.create_rectangle(30,30,grid_size_w, grid_size_h)
     
     total_grid_w = grid_size_w - grid_size_w_start
     total_grid_h = grid_size_h - grid_size_h_start
@@ -219,20 +238,21 @@ def print_map(best_cycle):
     
     window.mainloop()
 
-    return ()
-    
-    """
-    Prints, in an easily understandable format, the cities and 
-    their connections, along with the cost for each connection 
-    and the total cost.
-    """
-    pass
+    return ()    
+
+
 
 def main():
     road_map = read_cities('city-data.txt')
+    print()
+    print('Original Data:' + '\n')
+    print(road_map)
     best_cycle = find_best_cycle(road_map)
-    print(best_cycle)
-    print_map(best_cycle[0])
+    printed_map = print_map(best_cycle)
+    print()
+    print('Best cycle road map with distance between cities:' + '\n')
+    print(printed_map)
+    visualize_road_map(best_cycle[0])
     
 
     """
