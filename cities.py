@@ -1,6 +1,7 @@
 import random
 import math
 import copy
+import tkinter as tk
 
 def read_cities(city_data):
     infile = open(city_data, 'r')
@@ -119,27 +120,106 @@ def find_best_cycle(road_map):
     """
 
 
-def print_map(road_map):
-
+def print_map(best_cycle):
     long_list = []
     lat_list = []
-    for j in range(0, len(road_map[0])):
-        long_list.append(float(road_map[0][j][2]))
-        lat_list.append(float(road_map[0][j][3]))
+    for j in range(0, len(best_cycle)):
+        long_list.append(float(best_cycle[j][3]))
+        lat_list.append(float(best_cycle[j][2]))
     
     long_list.sort()
     lat_list.sort()
     
-#    long_min = math.floor(long_list[0])
-#    long_max = math.ceil(long_list[49])
-#    lat_min = math.floor(lat_list[0])
-#    lat_max = math.ceil(lat_list[49])
-#    canvas = tkinter.Canvas(window, bg = 'white', width = 3700, height = 1900)
-#    canvas.pack()
-#    box1 = canvas.create_rectangle(50,50,1600,800)
+    long_min = math.floor(long_list[0])
+    long_max = math.ceil(long_list[49])
+    lat_min = math.floor(lat_list[0])
+    lat_max = math.ceil(lat_list[49])
     
+    x1_coordinate = max(long_min, -180)
+    x2_coordinate = min(long_max, 180)    
+    y1_coordinate = min(lat_min, 90)
+    y2_coordinate = max(lat_max, -90)
     
-    return (long_list, lat_list)
+    distance_x = (x2_coordinate - x1_coordinate)
+    distance_y = (y2_coordinate - y1_coordinate)
+    
+    window = tk.Tk()
+    window.title("Road Map")
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
+
+    canvas = tk.Canvas(window, bg = 'white', width = screen_width - 100, height = screen_height - 100)
+    canvas.pack()
+    grid_size_w_start = 30
+    grid_size_h_start = 30
+    grid_size_w = screen_width - 400
+    grid_size_h = screen_height - 200
+#    box1 = canvas.create_rectangle(30,30,grid_size_w, grid_size_h)
+    
+    total_grid_w = grid_size_w - grid_size_w_start
+    total_grid_h = grid_size_h - grid_size_h_start
+    
+    x_line_distance = int(total_grid_w / distance_x)
+    y_line_distance = int(total_grid_h / distance_y)
+    
+    x_line_total = int(total_grid_w / x_line_distance)
+    y_line_total = int(total_grid_h / y_line_distance)
+    
+    x_axis_values = math.ceil(distance_x / x_line_total)
+    y_axis_values = math.ceil(distance_y / y_line_total)
+    
+    #draw vertical lines:    
+    y_2 = grid_size_h_start + ((y_line_total) * y_line_distance)
+    for i in range(grid_size_h_start, ((x_line_total)* x_line_distance) + 40, x_line_distance):
+        canvas.create_line(i,grid_size_h_start,i,y_2)
+    
+    #draw horizontal lines:        
+    x_2 = grid_size_w_start + ((x_line_total) * x_line_distance)
+    for i in range(grid_size_w_start, ((y_line_total)* y_line_distance) + 35, y_line_distance):
+        canvas.create_line(grid_size_w_start,i,x_2,i)
+        
+    #label x-axis:
+    count_x = x1_coordinate
+    for i in range(0, (x_line_total + 1) * x_line_distance, x_line_distance):
+        x = grid_size_w_start + i
+        y = 20
+        canvas.create_text(x, y, text = count_x, fill = 'blue', font = ("Times", 6, 'bold'))
+        count_x += x_axis_values
+    #label y-axis:
+    count_y = y2_coordinate
+    for i in range(0,(y_line_total + 1)*y_line_distance, y_line_distance):
+        x = 10
+        y = grid_size_h_start + i
+        canvas.create_text(x,y, text = count_y, fill = 'blue', font = ("Times", 6, 'bold'))
+        count_y -= y_axis_values
+     
+    
+    #take list of best cycle and place on grid map
+    count_city = 1
+    for i in best_cycle:
+        x = math.floor(float(i[3]))
+        y = math.floor(float(i[2]))
+        
+        x_position = grid_size_w_start - int(((x1_coordinate - x) * (x_line_distance / x_axis_values)))
+        y_position = grid_size_h_start + int(((y2_coordinate - y) * (y_line_distance / y_axis_values)))
+        
+        canvas.create_text(x_position, y_position, text = str(count_city), fill = 'red', font = ("Times", 10, "bold"))
+        count_city += 1
+    
+    #label numbers with city, state
+    y_text = 30
+    for i in range(0, (len(best_cycle))):
+        city = str(best_cycle[i][1])
+        state = str(best_cycle[i][0])
+        full_text = str(i+1) + '.' + city + ',' + state
+        canvas.create_text(grid_size_w + 100, y_text, text = full_text, font = ("Times", 8, 'bold') )
+        y_text += 10
+        
+        
+    
+    window.mainloop()
+
+    return ()
     
     """
     Prints, in an easily understandable format, the cities and 
@@ -149,6 +229,11 @@ def print_map(road_map):
     pass
 
 def main():
+    road_map = read_cities('city-data.txt')
+    best_cycle = find_best_cycle(road_map)
+    print(best_cycle)
+    print_map(best_cycle[0])
+    
 
     """
     Reads in, and prints out, the city data, then creates the "best"
