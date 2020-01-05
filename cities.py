@@ -276,7 +276,7 @@ def visualize(best_cycle):
 
 
 def main():
-    road_map = read_cities('asia.txt')
+    road_map = read_cities('city-data.txt')
     print()
     print('Original Data:' + '\n')
     print(road_map)
