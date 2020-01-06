@@ -13,11 +13,7 @@ def test_compute_total_distance():
     
     country_capital1 = [('Somaliland', 'Hargeisa', 9.55, 44.05),\
                        ('South Georgia and South Sandwich Islands', \
-                        'King Edward Point', -54.283333, -36.5), \
-                        ('French Southern and Antarctic Lands', \
-                         'Port-aux-FranÃ§ais', -49.35, 70.216667),\
-                        ('Palestine', 'Jerusalem', 31.76666667, 35.233333),\
-                        ('Aland Islands', 'Mariehamn', 60.116667, 19.9)] 
+                        'King Edward Point', -54.283333, -36.5)] 
     
     country_capital2 = [('Belgium', 'Brussels', 50.83333333, 4.333333),\
                         ('Belize', 'Belmopan', 17.25, -88.766667),\
@@ -36,6 +32,14 @@ def test_compute_total_distance():
     
     assert compute_total_distance(road_map2) ==\
             pytest.approx(54.6848+33.4221+25.8176,0.01)
+            
+    assert compute_total_distance(country_capital1) == \
+            pytest.approx(102.77644137587606 + 102.77644137587606, 0.01)
+    
+    assert compute_total_distance(country_capital2) == \
+            pytest.approx(98.97196712985898 + 92.01540547144181 + \
+                          72.16924552636809 + 71.56267196629507, 0.01)
+    
 
 
 def test_swap_cities():
@@ -80,23 +84,25 @@ def test_swap_cities():
           ('Alabama', 'Montgomery', 32.361538, -86.279118)],
             113.92444731706529)    
         
-    assert swap_cities(country_capital, 0, 1) == \
-        ([('South Georgia and South Sandwich Islands', \
-           'King Edward Point', -54.283333, -36.5),
-            ('Somaliland', 'Hargeisa', 9.55, 44.05),\
-            ('French Southern and Antarctic Lands', \
-             'Port-aux-FranÃ§ais', -49.35, 70.216667),\
-             ('Palestine', 'Jerusalem', 31.76666667, 35.233333),\
-             ('Aland Islands', 'Mariehamn', 60.116667, 19.9)])
+    assert swap_cities(country_capital, 2, 3) == \
+        ([('Somaliland', 'Hargeisa', 9.55, 44.05),\
+                       ('South Georgia and South Sandwich Islands', \
+                        'King Edward Point', -54.283333, -36.5), \
+                        ('Palestine', 'Jerusalem', 31.76666667, 35.233333),\
+                        ('French Southern and Antarctic Lands', \
+                         'Port-aux-FranÃ§ais', -49.35, 70.216667), \
+                        ('Aland Islands', 'Mariehamn', 60.116667, 19.9)], \
+                          479.6578890387173)
         
     assert swap_cities(country_capital, 0, 4) == \
-        [('Aland Islands', 'Mariehamn', 60.116667, 19.9),\
+        ([('Aland Islands', 'Mariehamn', 60.116667, 19.9),\
                        ('South Georgia and South Sandwich Islands', \
                         'King Edward Point', -54.283333, -36.5), \
                         ('French Southern and Antarctic Lands', \
                          'Port-aux-FranÃ§ais', -49.35, 70.216667),\
                         ('Palestine', 'Jerusalem', 31.76666667, 35.233333),\
-                        ('Somaliland', 'Hargeisa', 9.55, 44.05)]
+                        ('Somaliland', 'Hargeisa', 9.55, 44.05)], \
+                        402.65653430359873)
         
     '''add your tests'''
 
@@ -133,14 +139,12 @@ def test_shift_cities():
     assert shift_cities(state_city1) == \
         ([("Minnesota", "Saint Paul", 44.95, -93.094),\
          ("Kentucky", "Frankfort", 38.197274, -84.86311),\
-         ("Delaware", "Dover", 39.161921, -75.526755)],\
-          38.528719926809416)
+         ("Delaware", "Dover", 39.161921, -75.526755)])
         
     assert shift_cities(state_city2) == \
         ([("Arizona", "Phoenix",	33.448457, -112.073844),\
          ("Alabama", "Montgomery", 32.361538, -86.279118),\
-         ("Alaska",	"Juneau", 58.301935, -134.41974)],\
-        113.92444731706527)
+         ("Alaska",	"Juneau", 58.301935, -134.41974)])
     
     assert shift_cities(country_capital1) == \
         ([('Aland Islands', 'Mariehamn', 60.116667, 19.9),
@@ -165,7 +169,5 @@ def test_shift_cities():
           ('Saint Helena', 'Jamestown', -15.933333, -5.716667),\
           ('Sao Tome and Principe', 'Sao Tome', 0.3333, 6.7333)])
 
-         
-    '''add your tests'''
 
 
