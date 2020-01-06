@@ -39,6 +39,10 @@ def test_compute_total_distance():
     assert compute_total_distance(country_capital2) == \
             pytest.approx(98.97196712985898 + 92.01540547144181 + \
                           72.16924552636809 + 71.56267196629507, 0.01)
+    assert compute_total_distance(country_capital3) == \
+            pytest.approx(6.999622492142811 + 25.074583490578224 + \
+                          38.40296954765058 + 20.484262922003758 + \
+                          28.303599835741743 + 19.78743989912681, 0.01 )
     
 
 
