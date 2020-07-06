@@ -1,15 +1,15 @@
 # Traveling Salesman
 
-This coursework considers a simplified version of the travelling salesman problem.
+This a simplified version of the travelling salesman problem.
 
-## Purposes of this assignment
+## Purpose:
 
 - To get skills for solving more complex problems with programs.
-- To make you consider different search algorithms and data structures.
+- To consider different search algorithms and data structures.
 - To give you more practice with writing tests.
 - To gain experience with *Test-Driven-Development* (TDD).
 
-## General idea of the assignment
+## General idea
 
 Suppose there are a number of "cities", as in shown in Figure 1:
 
@@ -22,7 +22,7 @@ The distance between any two cities with the coordinates (x1, y1) and (x2,y2) is
 
 sqrt((x1-x2)^2 + (y1-y2)^2)
 
-Thus, we assume that the Earth is "flat" for the purposes of this assignment.
+Thus, we assume that the Earth is "flat".
 A traveling salesman wishes to visit every city exactly once, 
 then return to their starting point. (It doesn't matter what city is 
 the starting point.) Such a path is called a *circuit*, 
@@ -34,11 +34,7 @@ However, the salesman also wishes to minimise the total distance that
 must be traveled.
 
 This is a classic computer science problem, known as the 
-**Traveling Salesman problem**. You can find algorithms for 
-finding reasonably good solutions on the web, and you are welcome to look 
-at those algorithms. However, we want you use a *hill climbing& approach, 
-where you start with "any" solution, and try to progressively improve 
-it until you can't improve it any more.
+**Traveling Salesman problem**.
 
 ## Specific requirements
 
