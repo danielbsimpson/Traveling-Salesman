@@ -2,7 +2,7 @@
 
 This a simplified version of the travelling salesman problem with a brute force solution.
 
-The file will take in a list of cities, along with their longitude and latitude, and calculate the shortest path to visiting all of the cities.
+The file will take in a list of cities, along with their longitude and latitude, and calculates the shortest path to visiting all of the cities.
 
 The program uses random swapping and shifting while calculating euclidean distance to find the shortest path.
 In the end tkinter GUI is used to display a grip map of all the cities and the order in which they should be traversed.
