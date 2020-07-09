@@ -18,5 +18,5 @@ Total path distance is displayed in the console along with the original list and
 
 
 As the program uses random assignment, it will result in different paths and different total distances if run multiple times.
-
+Test cases are utilized to ensure the program works throughout the whole process.
 Please see the cities.py file for full code.
